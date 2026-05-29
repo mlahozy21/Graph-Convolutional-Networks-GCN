@@ -1,51 +1,73 @@
 # GCN: Semi-Supervised Classification with Graph Convolutional Networks
 
-Implementation from scratch of the GCN model from Kipf and Welling (ICLR 2017) for the GRMDIL course project.
+From-scratch implementation of the GCN model from Kipf & Welling (ICLR 2017) for the GRMDIL course project: paper reproduction, an MLP baseline, and over-smoothing experiments on Cora, Citeseer, and Pubmed.
 
-## Setup
+## Project structure
+
+```
+.
+├── pyproject.toml          # package metadata and dependencies
+├── requirements.txt        # dependencies (alternative to pip install -e .)
+├── README.md  LICENSE  .gitignore
+├── src/gcn/                # installable library package
+│   ├── data.py             # dataset download/loading (Cora, Citeseer, Pubmed)
+│   ├── model.py            # GCN layer, GCN, MLP baseline, DeepGCN, ResidualDeepGCN
+│   ├── train.py            # training and evaluation pipeline
+│   └── utils.py            # reproducibility helpers (set_seed)
+├── scripts/                # entry points
+│   ├── main.py             # reproduce paper results + MLP baseline comparison
+│   └── experiments.py      # over-smoothing experiments (varying depth)
+└── docs/
+    ├── report.pdf          # project report
+    ├── report.tex
+    └── references.bib
+```
+
+## Installation
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+git clone https://github.com/mlahozy21/gcn_project.git
+cd gcn_project
+
+python -m venv .venv
+source .venv/bin/activate          # On Windows: .venv\Scripts\activate
+
+pip install -e .                   # installs the gcn package and its dependencies
 ```
 
-## Project Structure
-
-```
-gcn_project/
-├── data.py           # Dataset downloading and loading (Cora, Citeseer, Pubmed)
-├── model.py          # GCN layer, GCN model, MLP baseline, DeepGCN
-├── train.py          # Training and evaluation pipeline
-├── experiments.py    # Over-smoothing experiments (varying depth)
-├── main.py           # Reproduce paper results + MLP baseline comparison
-├── requirements.txt
-└── README.md
-```
+`pip install -e .` reads the dependencies from `pyproject.toml`. The Planetoid datasets are downloaded automatically on first run.
 
 ## Usage
 
+Run all commands from the repository root.
+
 ### Reproduce paper results (GCN + MLP baseline on all datasets)
 ```bash
-python main.py
+python scripts/main.py
 ```
 
 ### Run on a single dataset
 ```bash
-python main.py --dataset cora
+python scripts/main.py --dataset cora
 ```
 
 ### Run over-smoothing experiments
 ```bash
-python experiments.py
+python scripts/experiments.py
 ```
 
 ## Experiments
 
-1. **Reproduction**: GCN on Cora, Citeseer, Pubmed — compare with Table 2 of the paper.
-2. **MLP baseline**: Same architecture without graph structure — compare with Table 3. Shows the contribution of graph convolutions.
-3. **Over-smoothing**: GCN with 2 to 64 layers — shows performance degradation with depth.
+1. **Reproduction**: GCN on Cora, Citeseer, Pubmed — compared with Table 2 of the paper.
+2. **MLP baseline**: same architecture without graph structure — compared with Table 3, showing the contribution of graph convolutions.
+3. **Over-smoothing**: GCN with increasing depth (2, 4, 8, 16 layers) — shows performance degradation with depth, and how residual connections partially mitigate it.
+
+Runs are seeded per repetition (`set_seed(run)`), so results are reproducible while the mean/std still reflect run-to-run variation.
 
 ## Reference
 
 Kipf, T. N., & Welling, M. (2017). Semi-Supervised Classification with Graph Convolutional Networks. ICLR 2017. https://arxiv.org/abs/1609.02907
+
+## License
+
+Released under the MIT License — see `LICENSE`.

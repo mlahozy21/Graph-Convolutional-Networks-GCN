@@ -26,7 +26,7 @@ def sparse_dropout(x: torch.Tensor, p: float, training: bool) -> torch.Tensor:
     """Apply dropout to a sparse tensor by masking non-zero values."""
     if not training or p == 0:
         return x
-    mask = torch.rand(x._values().size()) > p
+    mask = torch.rand(x._values().size(), device=x.device) > p
     indices = x._indices()[:, mask]
     values = x._values()[mask] / (1 - p)  # scale to preserve expectation
     return torch.sparse_coo_tensor(indices, values, x.size()).coalesce()

@@ -18,8 +18,9 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-from data import load_dataset, normalize_adjacency
-from train import train_gcn, train_mlp
+from gcn.data import load_dataset, normalize_adjacency
+from gcn.train import train_gcn, train_mlp
+from gcn.utils import set_seed
 
 
 # Expected results from Kipf & Welling (2017)
@@ -47,6 +48,7 @@ def run_single_dataset(dataset_name, data_dir="data"):
     first_val_losses = None
 
     for run in range(N_RUNS):
+        set_seed(run)
         result = train_gcn(
             features, adj_norm, labels,
             idx_train, idx_val, idx_test,
@@ -71,6 +73,7 @@ def run_single_dataset(dataset_name, data_dir="data"):
     mlp_accs = []
 
     for run in range(N_RUNS):
+        set_seed(run)
         acc = train_mlp(
             features, adj_norm, labels,
             idx_train, idx_val, idx_test,

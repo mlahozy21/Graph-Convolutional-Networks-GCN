@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gcn"
+version = "0.1.0"
+description = "From-scratch Graph Convolutional Networks (Kipf & Welling, ICLR 2017): paper reproduction, MLP baseline, and over-smoothing experiments on Cora/Citeseer/Pubmed."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Marcos Lahoz" }]
+keywords = ["GCN", "graph-neural-networks", "semi-supervised", "Cora", "Citeseer", "Pubmed", "PyTorch"]
+
+dependencies = [
+    "torch>=2.0.0",
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+    "matplotlib>=3.7.0",
+]
+
+[project.urls]
+Repository = "https://github.com/mlahozy21/gcn_project"
+
+[tool.setuptools.packages.find]
+where = ["src"]

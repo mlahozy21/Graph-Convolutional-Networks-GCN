@@ -16,8 +16,8 @@ import torch
 import torch.nn.functional as F
 import torch.optim as optim
 
-from model import GCN, MLP, DeepGCN, ResidualDeepGCN
-from data import DEVICE
+from .model import GCN, MLP, DeepGCN, ResidualDeepGCN
+from .data import DEVICE
 
 
 def train_epoch(model, optimizer, features, adj, labels, idx_train):

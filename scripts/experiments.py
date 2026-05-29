@@ -17,8 +17,9 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-from data import load_dataset, normalize_adjacency
-from train import train_deep_gcn, train_residual_deep_gcn
+from gcn.data import load_dataset, normalize_adjacency
+from gcn.train import train_deep_gcn, train_residual_deep_gcn
+from gcn.utils import set_seed
 
 
 DATASETS = ["cora", "citeseer", "pubmed"]
@@ -51,6 +52,7 @@ def run_oversmoothing_experiment(data_dir="data"):
             # Standard GCN
             accs = []
             for run in range(N_RUNS):
+                set_seed(run)
                 acc = train_deep_gcn(
                     features, adj_norm, labels,
                     idx_train, idx_val, idx_test,
@@ -73,6 +75,7 @@ def run_oversmoothing_experiment(data_dir="data"):
             # Residual GCN
             accs_res = []
             for run in range(N_RUNS):
+                set_seed(run)
                 acc = train_residual_deep_gcn(
                     features, adj_norm, labels,
                     idx_train, idx_val, idx_test,

@@ -152,7 +152,7 @@ def row_normalize_sparse(matrix: sp.csr_matrix) -> sp.csr_matrix:
     return D_inv @ matrix
 
 
-def scipy_sparse_to_torch(matrix: sp.spmatrix) -> torch.sparse.FloatTensor:
+def scipy_sparse_to_torch(matrix: sp.spmatrix) -> torch.Tensor:
     """Convert a scipy sparse matrix to a coalesced torch sparse tensor."""
     coo = matrix.tocoo()
     indices = torch.LongTensor(np.vstack([coo.row, coo.col]))
@@ -176,7 +176,7 @@ def build_adjacency(graph_dict: dict, num_nodes: int) -> sp.csr_matrix:
     return adj.tocsr()
 
 
-def normalize_adjacency(adj: sp.csr_matrix) -> torch.sparse.FloatTensor:
+def normalize_adjacency(adj: sp.csr_matrix) -> torch.Tensor:
     """
     Compute the normalized adjacency with self-loops:
         A_hat = D_tilde^{-1/2} A_tilde D_tilde^{-1/2}

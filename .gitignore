@@ -1,16 +1,18 @@
-# Entorno virtual
+# Virtual environment
 venv/
+.venv/
 
 # Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.egg-info/
 
-# Datos descargados (se regeneran automáticamente)
+# Downloaded datasets (regenerated automatically)
 data/
 
-# Resultados y logs
+# Results and logs
 results/
 logs/
 *.log
@@ -22,15 +24,12 @@ logs/
 .vscode/
 .idea/
 
-# Variables de entorno
+# Environment variables
 .env
 
-# Notas personales
-comandos.txt
-
-# LaTeX (compilados, solo se sube el PDF)
-report/*.aux
-report/*.bbl
-report/*.blg
-report/*.log
-report/*.out
+# LaTeX build artifacts (only the PDF is versioned)
+docs/*.aux
+docs/*.bbl
+docs/*.blg
+docs/*.log
+docs/*.out
