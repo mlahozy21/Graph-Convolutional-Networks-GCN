@@ -26,8 +26,8 @@ From-scratch implementation of the GCN model from Kipf & Welling (ICLR 2017) for
 ## Installation
 
 ```bash
-git clone https://github.com/mlahozy21/gcn_project.git
-cd gcn_project
+git clone https://github.com/mlahozy21/Graph-Convolutional-Networks-GCN.git
+cd Graph-Convolutional-Networks-GCN
 
 python -m venv .venv
 source .venv/bin/activate          # On Windows: .venv\Scripts\activate

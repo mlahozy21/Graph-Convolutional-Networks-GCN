@@ -20,7 +20,7 @@ dependencies = [
 ]
 
 [project.urls]
-Repository = "https://github.com/mlahozy21/gcn_project"
+Repository = "https://github.com/mlahozy21/Graph-Convolutional-Networks-GCN"
 
 [tool.setuptools.packages.find]
 where = ["src"]
