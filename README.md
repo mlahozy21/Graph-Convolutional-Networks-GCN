@@ -80,15 +80,11 @@ the graph structure.
 The GCN beats the MLP by ~25 pts on Cora but only ~6 pts on Pubmed, consistent with Pubmed's
 tf-idf features being already highly informative on their own.
 
-**Over-smoothing.** Stacking more layers sharply degrades accuracy — on Cora, 82.7% (2 layers)
-→ 15.8% (16 layers); on Citeseer 71.4% → 20.4%; on Pubmed 78.6% → 38.7%. Residual connections
-partially mitigate it (e.g. Pubmed at 8 layers: 65.2% with residuals vs. 39.5% without).
+**Over-smoothing.** Stacking more layers sharply degrades accuracy, and residual
+connections partially mitigate it. Test accuracy (%), mean ± std over 3 seeded runs
+(S = standard GCN, R = + residual connections):
 
-
-## Reference
-
-Kipf, T. N., & Welling, M. (2017). Semi-Supervised Classification with Graph Convolutional Networks. ICLR 2017. https://arxiv.org/abs/1609.02907
-
-## License
-
-Released under the MIT License — see `LICENSE`.
+| Layers | Cora S | Cora R | Citeseer S | Citeseer R | Pubmed S | Pubmed R |
+|:------:|:------:|:------:|:----------:|:----------:|:--------:|:--------:|
+| 2  | **82.7 ± 0.5** | 81.8 ± 0.6 | **71.4 ± 0.6** | 71.3 ± 0.5 | 78.6 ± 0.2 | **79.4 ± 0.2** |
+| 4  | 75.4 ± 0.9 | 78.9 ± 2.9 | 46.
