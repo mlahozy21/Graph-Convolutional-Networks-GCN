@@ -87,4 +87,19 @@ connections partially mitigate it. Test accuracy (%), mean ± std over 3 seeded 
 | Layers | Cora S | Cora R | Citeseer S | Citeseer R | Pubmed S | Pubmed R |
 |:------:|:------:|:------:|:----------:|:----------:|:--------:|:--------:|
 | 2  | **82.7 ± 0.5** | 81.8 ± 0.6 | **71.4 ± 0.6** | 71.3 ± 0.5 | 78.6 ± 0.2 | **79.4 ± 0.2** |
-| 4  | 75.4 ± 0.9 | 78.9 ± 2.9 | 46.
+| 4  | 75.4 ± 0.9 | 78.9 ± 2.9 | 46.5 ± 11.8 | 62.8 ± 3.3 | 74.4 ± 2.6 | 75.1 ± 3.1 |
+| 8  | 29.6 ± 18.5 | 31.2 ± 3.6 | 24.5 ± 7.9 | 27.8 ± 9.4 | 39.5 ± 15.2 | 65.2 ± 9.0 |
+| 16 | 15.8 ± 11.4 | 25.5 ± 8.9 | 20.4 ± 3.9 | 20.7 ± 3.4 | 38.7 ± 2.2 | 40.9 ± 0.8 |
+
+Beyond 4 layers the standard GCN collapses towards majority-class accuracy (e.g. Cora:
+82.7% → 15.8%), while residuals keep gradients flowing and representations distinct —
+most visibly on Pubmed at 8 layers (65.2% vs 39.5%).
+
+
+## Reference
+
+Kipf, T. N., & Welling, M. (2017). Semi-Supervised Classification with Graph Convolutional Networks. ICLR 2017. https://arxiv.org/abs/1609.02907
+
+## License
+
+Released under the MIT License — see `LICENSE`.
