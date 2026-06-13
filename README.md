@@ -80,8 +80,8 @@ the graph structure.
 The GCN beats the MLP by ~25 pts on Cora but only ~6 pts on Pubmed, consistent with Pubmed's
 tf-idf features being already highly informative on their own.
 
-**Over-smoothing.** Stacking more layers sharply degrades accuracy, and residual
-connections partially mitigate it. Test accuracy (%), mean ± std over 3 seeded runs
+**Over-smoothing.** Stacking more layers degrades accuracy, and residual
+connections appear to partially mitigate it. Test accuracy (%), mean ± std
 (S = standard GCN, R = + residual connections):
 
 | Layers | Cora S | Cora R | Citeseer S | Citeseer R | Pubmed S | Pubmed R |
@@ -91,15 +91,10 @@ connections partially mitigate it. Test accuracy (%), mean ± std over 3 seeded 
 | 8  | 29.6 ± 18.5 | 31.2 ± 3.6 | 24.5 ± 7.9 | 27.8 ± 9.4 | 39.5 ± 15.2 | 65.2 ± 9.0 |
 | 16 | 15.8 ± 11.4 | 25.5 ± 8.9 | 20.4 ± 3.9 | 20.7 ± 3.4 | 38.7 ± 2.2 | 40.9 ± 0.8 |
 
-Beyond 4 layers the standard GCN collapses towards majority-class accuracy (e.g. Cora:
-82.7% → 15.8%), while residuals keep gradients flowing and representations distinct —
-most visibly on Pubmed at 8 layers (65.2% vs 39.5%).
-
-
-## Reference
-
-Kipf, T. N., & Welling, M. (2017). Semi-Supervised Classification with Graph Convolutional Networks. ICLR 2017. https://arxiv.org/abs/1609.02907
-
-## License
-
-Released under the MIT License — see `LICENSE`.
+The clearest, robust signal is the **collapse with depth**: at 2 layers all
+configs perform well, and beyond 4 layers the standard GCN trends towards
+majority-class accuracy (e.g. Cora 82.7% → 15.8%). The apparent residual
+*advantage*, by contrast, should be read cautiously: in the deep regime the
+standard deviations are large (often ±8–18 pts) and frequently overlap between
+the S and R columns, so individual S-vs-R gaps at 4/8/16 layers are **not**
+statisticall

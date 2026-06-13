@@ -89,29 +89,45 @@ def load_dataset(dataset_name: str, data_dir: str = "data"):
 
     x, y, tx, ty, allx, ally, graph = objects
 
-    # Load test indices
+    # Load test indices.
+    #
+    # ``test_idx_reorder`` is the *unsorted* list of graph node ids for the test
+    # instances, in the same row order as ``tx``/``ty``. ``test_idx_range`` is its
+    # sorted version. After ``vstack`` the test rows land in positions
+    # ``len(allx) .. len(allx)+len(tx)`` in their original (reorder) order; the
+    # canonical Kipf scatter
+    #     features[test_idx_reorder, :] = features[test_idx_range, :]
+    # places every test row at the graph-node position it belongs to so that
+    # features/labels stay aligned with the adjacency matrix. Indexing the LHS
+    # with the reorder list and the RHS with the sorted range is exactly this
+    # idiom (see tkipf/gcn utils.load_data).
     test_index_path = os.path.join(dataset_dir, f"ind.{dataset_name}.test.index")
-    test_idx = parse_index_file(test_index_path)
-    test_idx_sorted = np.sort(test_idx)
+    test_idx_reorder = parse_index_file(test_index_path)
+    test_idx_range = np.sort(test_idx_reorder)
 
-    # Handle Citeseer isolated nodes (some test indices are missing)
+    # Handle Citeseer isolated nodes (some test indices are missing from the
+    # graph). We expand tx/ty to span the full contiguous index range and place
+    # the available rows at their sorted positions; missing rows stay zero.
     if dataset_name == "citeseer":
-        n_test_full = max(test_idx) - min(test_idx) + 1
+        test_idx_range_full = range(
+            min(test_idx_reorder), max(test_idx_reorder) + 1
+        )
+        n_test_full = len(test_idx_range_full)
         tx_extended = sp.lil_matrix((n_test_full, x.shape[1]))
-        tx_extended[test_idx_sorted - min(test_idx_sorted), :] = tx
+        tx_extended[test_idx_range - min(test_idx_range), :] = tx
         tx = tx_extended.tocsr()
 
         ty_extended = np.zeros((n_test_full, y.shape[1]))
-        ty_extended[test_idx_sorted - min(test_idx_sorted), :] = ty
+        ty_extended[test_idx_range - min(test_idx_range), :] = ty
         ty = ty_extended
 
     # Stack features: allx (train+unlabeled) and tx (test)
     features = sp.vstack([allx, tx]).tolil()
-    features[test_idx, :] = features[test_idx_sorted, :]
+    features[test_idx_reorder, :] = features[test_idx_range, :]
 
-    # Stack labels
+    # Stack labels (same reorder so labels track features and the adjacency)
     labels = np.vstack([ally, ty])
-    labels[test_idx] = labels[test_idx_sorted]
+    labels[test_idx_reorder, :] = labels[test_idx_range, :]
     labels = np.argmax(labels, axis=1)
 
     # Build adjacency matrix from graph dict
@@ -121,7 +137,7 @@ def load_dataset(dataset_name: str, data_dir: str = "data"):
     # Standard splits from Kipf & Welling
     idx_train = list(range(len(y)))
     idx_val = list(range(len(y), len(y) + 500))
-    idx_test = test_idx
+    idx_test = test_idx_range.tolist()
 
     # Row-normalize features (sparse)
     features = row_normalize_sparse(features.tocsr())

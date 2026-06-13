@@ -24,7 +24,7 @@ from gcn.utils import set_seed
 
 DATASETS = ["cora", "citeseer", "pubmed"]
 LAYER_COUNTS = [2, 4, 8, 16]
-N_RUNS = 3  # average over multiple runs for stability
+N_RUNS = 10  # average over multiple runs for stability (more runs -> tighter std bands)
 
 
 def run_oversmoothing_experiment(data_dir="data"):
