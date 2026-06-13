@@ -91,10 +91,9 @@ connections appear to partially mitigate it. Test accuracy (%), mean ± std
 | 8  | 29.6 ± 18.5 | 31.2 ± 3.6 | 24.5 ± 7.9 | 27.8 ± 9.4 | 39.5 ± 15.2 | 65.2 ± 9.0 |
 | 16 | 15.8 ± 11.4 | 25.5 ± 8.9 | 20.4 ± 3.9 | 20.7 ± 3.4 | 38.7 ± 2.2 | 40.9 ± 0.8 |
 
-The clearest, robust signal is the **collapse with depth**: at 2 layers all
-configs perform well, and beyond 4 layers the standard GCN trends towards
-majority-class accuracy (e.g. Cora 82.7% → 15.8%). The apparent residual
-*advantage*, by contrast, should be read cautiously: in the deep regime the
-standard deviations are large (often ±8–18 pts) and frequently overlap between
-the S and R columns, so individual S-vs-R gaps at 4/8/16 layers are **not**
-statisticall
+The clearest signal is the **collapse with depth**: at 2 layers all configs
+perform well, and beyond 4 layers the standard GCN trends towards majority-class
+accuracy (e.g. Cora 82.7% → 15.8%). Residual connections hold up markedly better
+in the deep regime — the Pubmed 8-layer cell (65.2 ± 9.0 vs 39.5 ± 15.2) is the
+clearest case — though run-to-run variance at depth is large (often ±8–18 pts),
+so the smaller per-cell gaps are best read as indicative of th
