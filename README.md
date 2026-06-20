@@ -96,4 +96,13 @@ perform well, and beyond 4 layers the standard GCN trends towards majority-class
 accuracy (e.g. Cora 82.7% → 15.8%). Residual connections hold up markedly better
 in the deep regime — the Pubmed 8-layer cell (65.2 ± 9.0 vs 39.5 ± 15.2) is the
 clearest case — though run-to-run variance at depth is large (often ±8–18 pts),
-so the smaller per-cell gaps are best read as indicative of th
+so the smaller per-cell gaps are best read as indicative of the trend.
+
+
+## Reference
+
+Kipf, T. N., & Welling, M. (2017). Semi-Supervised Classification with Graph Convolutional Networks. ICLR 2017. https://arxiv.org/abs/1609.02907
+
+## License
+
+Released under the MIT License — see `LICENSE`.
